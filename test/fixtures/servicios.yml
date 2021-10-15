@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  servidor: one
+  aplicacion: one
+  puerto: 1
+
+two:
+  servidor: two
+  aplicacion: two
+  puerto: 1
