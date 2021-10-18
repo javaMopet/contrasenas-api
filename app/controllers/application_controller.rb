@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::API
     before_action :autorizar
 
+    "".split
+
     KEY = 'miPalabraSecreta'
 
     def header_authorization
@@ -12,7 +14,7 @@ class ApplicationController < ActionController::API
     def autorizar 
         #'Autorization: Bearer fa35sd1f2a1sdf65a1sdf321asdf51a6dsf'
         #'content-type: application/json'
-        token  = header_authorization
+        token  = header_authorization 
         if token
             begin
                 JWT.decode(token,KEY)
@@ -23,10 +25,8 @@ class ApplicationController < ActionController::API
             end
         else
             render json: {mensaje: "Iniciar sesión"}, status: :unauthorized
-        end 
+        end
     end 
-
-
 
     def current_user 
         token = header_authorization

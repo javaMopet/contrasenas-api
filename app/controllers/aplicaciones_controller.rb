@@ -4,8 +4,7 @@ class AplicacionesController < ApplicationController
   # GET /aplicaciones
   def index
     @aplicaciones = Aplicacion.all
-
-    render json: @aplicaciones
+    render json: serializer.new(@aplicaciones), status: :ok
   end
 
   # GET /aplicaciones/1
@@ -54,4 +53,8 @@ class AplicacionesController < ApplicationController
     def aplicacion_params
       params.require(:aplicacion).permit(:nombre, :version)
     end
+
+    def serializer 
+      AplicacionSerializer
+    end 
 end

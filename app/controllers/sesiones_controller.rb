@@ -7,7 +7,7 @@ class SesionesController < ApplicationController
     empleado = Empleado.find_by_login(login)   
 
     if empleado and empleado.password == password 
-      tokenExpiration = 45.minutes.from_now.to_i
+      tokenExpiration = 40.minutes.from_now.to_i
       puts("Token expiration: #{tokenExpiration}")
       token = genera_token({id: empleado.id, nombre: empleado.nombre}, tokenExpiration)
       render json: {empleado: empleado, token: token, tokenExpiration: tokenExpiration}, status: :ok

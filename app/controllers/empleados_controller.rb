@@ -5,8 +5,7 @@ class EmpleadosController < ApplicationController
   # GET /empleados
   def index
     @empleados = Empleado.all
-
-    render json: @empleados
+    render json: serializer.new(@empleados), status: :ok
   end
 
   # GET /empleados/1
@@ -15,15 +14,25 @@ class EmpleadosController < ApplicationController
   end
 
   # POST /empleados
-  def create
+  def create    
     @empleado = Empleado.new(empleado_params)
-
-    if @empleado.save
-      exp = 40.minutes.from_now.to_i
-      token = genera_token({id: @empleado.id, nombre: @empleado.nombre}, exp)
-      render json: {empleado: @empleado, token: token, tokenExpiration: exp}, status: :created, location: @empleado
+        
+    begin
+      if @empleado.save
+        puts ("empleado guardado")
+        exp = 40.minutes.from_now.to_i
+        token = genera_token({id: @empleado.id, nombre: @empleado.nombre}, exp)
+        render json: {empleado: @empleado, token: token, tokenExpiration: exp}, status: :created, location: @empleado        
+        return
+      end
+    rescue ActiveRecord::RecordNotUnique => e
+      messageError = (e.message.include? 'UNIQUE constraint') ? "La cuenta de correo ha sido ya está registrada previamente." : "Login UNIQUE"
+      render json: {mensajeError: messageError}, status: :unprocessable_entity
     else
-      render json: @empleado.errors, status: :unprocessable_entity
+      puts("rescue else ")
+      fullMessages = @empleado.errors.full_messages.to_s        
+      messageError = (fullMessages.include? 'Login') ? 'La cuenta de correo ya ha sido registrada previamente' : fullMessages        
+      render json: {mensajeError: messageError}, status: :unprocessable_entity
     end
   end
 
@@ -51,4 +60,8 @@ class EmpleadosController < ApplicationController
     def empleado_params
       params.require(:empleado).permit(:nombre, :rol, :login, :password)
     end
+
+    def serializer 
+      EmpleadoSerializer
+    end 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_30_155020) do
+ActiveRecord::Schema.define(version: 2021_10_17_030743) do
 
   create_table "aplicaciones", force: :cascade do |t|
     t.string "nombre", limit: 30
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2021_09_30_155020) do
     t.string "password", limit: 20
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["login"], name: "index_unique_login", unique: true
   end
 
   create_table "servicios", force: :cascade do |t|
@@ -43,6 +44,8 @@ ActiveRecord::Schema.define(version: 2021_09_30_155020) do
     t.string "ip", limit: 20
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "empleado_id", null: false
+    t.index ["empleado_id"], name: "index_servidores_on_empleado_id"
   end
 
   create_table "servidors", force: :cascade do |t|
@@ -54,4 +57,5 @@ ActiveRecord::Schema.define(version: 2021_09_30_155020) do
 
   add_foreign_key "servicios", "aplicaciones"
   add_foreign_key "servicios", "servidores"
+  add_foreign_key "servidores", "empleados"
 end
