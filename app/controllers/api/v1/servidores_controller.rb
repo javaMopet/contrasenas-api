@@ -30,10 +30,10 @@ class Api::V1::ServidoresController < ApplicationController
 
     def destroy 
         
-        if servidor.delete
+        if @servidor.delete
         render json: {message: 'eliminado'}, status: :ok
         else 
-            render json: servidor.errors, status: :unprocessable_entity 
+            render json: @servidor.errors, status: :unprocessable_entity 
         end 
     end 
 
