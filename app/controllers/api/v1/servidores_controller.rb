@@ -16,7 +16,7 @@ class Api::V1::ServidoresController < ApplicationController
         if servidor.save
             render json: serializer.new(servidor), status: :ok
         else
-            render json: {errores: servidor.errors, messages: servidor.errors.full_messages.to_s}, status: :unprocessable_entity 
+            render json: {errors: servidor.errors, messages: servidor.errors.full_messages.to_s}, status: :unprocessable_entity 
         end  
     end 
 
@@ -46,7 +46,8 @@ class Api::V1::ServidoresController < ApplicationController
         params.require(:servidor).permit(:nombre, :ip, :empleado_id)
     end 
 
-    def serializer 
+    def serializer         
         ServidorSerializer
     end 
+
 end
