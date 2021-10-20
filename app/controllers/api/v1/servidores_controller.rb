@@ -2,8 +2,8 @@ class Api::V1::ServidoresController < ApplicationController
     before_action :set_servidor, only: [:show, :update, :destroy ]
 
     def index 
-        puts('buscando servidores...')
-        servidores = Servidor.all         
+        servidores = Servidor.all
+        # sleep 4
         render json: serializer.new(servidores), status: :ok        
     end 
 
@@ -28,8 +28,7 @@ class Api::V1::ServidoresController < ApplicationController
         end 
     end 
 
-    def destroy 
-        
+    def destroy         
         if @servidor.delete
         render json: {message: 'eliminado'}, status: :ok
         else 
