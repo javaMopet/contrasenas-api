@@ -16,7 +16,7 @@ class Api::V1::ServidoresController < ApplicationController
         if servidor.save
             render json: serializer.new(servidor), status: :ok
         else
-            render json: servidor.errors.full_messages, status: :unprocessable_entity 
+            render json: {errores: servidor.errors, messages: servidor.errors.full_messages.to_s}, status: :unprocessable_entity 
         end  
     end 
 
