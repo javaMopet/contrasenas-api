@@ -14,21 +14,21 @@ class AplicacionesController < ApplicationController
 
   # POST /aplicaciones
   def create
-    @aplicacion = Aplicacion.new(aplicacion_params)
+    aplicacion = Aplicacion.new(aplicacion_params)
 
-    if @aplicacion.save
-      render json: @aplicacion, status: :created, location: @aplicacion
+    if aplicacion.save
+      render json: serializer.new(aplicacion), status: :ok, location: @aplicacion
     else
-      render json: @aplicacion.errors, status: :unprocessable_entity
+      render json: {errors: aplicacion.errors,messages: aplicacion.errors.full_messages.to_s}, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /aplicaciones/1
   def update
     if @aplicacion.update(aplicacion_params)
-      render json: @aplicacion
+      render json: serializer.new(@aplicacion), status: :ok
     else
-      render json: @aplicacion.errors, status: :unprocessable_entity
+      render json: {errors: @aplicacion.errors,messages: @aplicacion.errors.full_messages.to_s}, status: :unprocessable_entity
     end
   end
 

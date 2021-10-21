@@ -3,9 +3,8 @@ class ServiciosController < ApplicationController
 
   # GET /servicios
   def index
-    @servicios = Servicio.all
-
-    render json: @servicios
+    servicios = Servicio.all
+    render json: serializer.new(servicios), statu: :ok
   end
 
   # GET /servicios/1
@@ -48,4 +47,8 @@ class ServiciosController < ApplicationController
     def servicio_params
       params.require(:servicio).permit(:servidor_id, :aplicacion_id, :puerto)
     end
+
+    def serializer
+      ServicioSerializer
+    end 
 end

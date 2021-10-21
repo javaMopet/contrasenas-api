@@ -22,7 +22,7 @@ class Api::V1::ServidoresController < ApplicationController
 
     def update
         if @servidor.update(servidor_params)
-            reder json: serializer.new(@servidor), status: :ok
+            render json: serializer.new(@servidor), status: :ok
         else 
             render json: @servidor.errors.full_messages, status: :unprocessable_entity 
         end 
