@@ -3,7 +3,7 @@ class AplicacionesController < ApplicationController
 
   # GET /aplicaciones
   def index
-    @aplicaciones = Aplicacion.all
+    @aplicaciones = Aplicacion.all    
     render json: serializer.new(@aplicaciones), status: :ok
   end
 

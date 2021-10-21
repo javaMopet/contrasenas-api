@@ -4,6 +4,7 @@ class ServiciosController < ApplicationController
   # GET /servicios
   def index
     servicios = Servicio.all
+    sleep 2
     render json: serializer.new(servicios), statu: :ok
   end
 
@@ -14,21 +15,21 @@ class ServiciosController < ApplicationController
 
   # POST /servicios
   def create
-    @servicio = Servicio.new(servicio_params)
-
-    if @servicio.save
-      render json: @servicio, status: :created, location: @servicio
+    servicio = Servicio.new(servicio_params)
+    puts(servicio)
+    if servicio.save
+      render json: serializer.new(servicio), status: :created, location: servicio
     else
-      render json: @servicio.errors, status: :unprocessable_entity
+      render json: {errors: servicio.errors,messages: servicio.errors.full_messages.to_s}, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /servicios/1
   def update
     if @servicio.update(servicio_params)
-      render json: @servicio
+      render json: serializer.new(@servicio), status: :ok
     else
-      render json: @servicio.errors, status: :unprocessable_entity
+      render json: {errors: @servicio.errors,messages: @servicio.errors.full_messages.to_s}, status: :unprocessable_entity
     end
   end
 
