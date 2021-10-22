@@ -4,7 +4,7 @@ class ServiciosController < ApplicationController
   # GET /servicios
   def index
     servicios = Servicio.all
-    sleep 2
+    sleep 1
     render json: serializer.new(servicios), statu: :ok
   end
 
